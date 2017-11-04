@@ -1,24 +1,27 @@
 <ion-header>
 
   <ion-navbar color="primary">
-      <ion-buttons left>
-          <button ion-button icon-only (click)="onBackPressed()" >
-            <ion-icon name="arrow-back"></ion-icon>
-          </button>
-        </ion-buttons>
-        <ion-buttons right>
-          <button ion-button icon-only (click)="onConfirm()" >
-            <ion-icon name="checkmark"></ion-icon>
-          </button>
-        </ion-buttons>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="onBackPressed()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="onConfirm()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Google Maps</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content>
-  <div id="map" #map >
+  <div id="map" #map></div>
 
-  </div>
+  <ion-fab bottom center>
+    <button ion-fab (click)="locateMe()">
+        <ion-icon name="locate"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

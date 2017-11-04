@@ -11,14 +11,14 @@
 
     <ion-list inset padding>
       <ion-item>
-        <button ion-button (click)="selectOnMap()" clear icon-only item-right>
+        <button ion-button (click)="fromSelectOnMap()" clear icon-only item-right>
           <ion-icon name="locate"></ion-icon>
         </button>
         <ion-input type="text" placeholder="From:" [(ngModel)]="destination.from"></ion-input>
       </ion-item>
 
       <ion-item>
-        <button ion-button (click)="selectOnMap()" clear icon-only item-right>
+        <button ion-button (click)="toSelectOnMap()" clear icon-only item-right>
           <ion-icon name="locate"></ion-icon>
         </button>
         <ion-input type="text" placeholder="To:" [(ngModel)]="destination.to"></ion-input>
@@ -34,9 +34,9 @@
     <ion-list>
       <ion-item>
         <ion-icon name="time" item-start></ion-icon>
-        <h1>Departure: {{transitData.routes[0].legs[0].departure_time.text}}</h1>
-        <h2>Arrival: {{transitData.routes[0].legs[0].arrival_time.text}}</h2>
-        <h2>Distance: {{transitData.routes[0].legs[0].distance.text}}</h2>
+        <h1>Duration: {{transitData.routes[0].legs[0].duration.text}}</h1>
+        <h2>Departure: {{transitData.routes[0].legs[0].departure_time.text}}, Arrival: {{transitData.routes[0].legs[0].arrival_time.text}}</h2>
+        <h3>Distance: {{transitData.routes[0].legs[0].distance.text}}</h3>
       </ion-item>
     </ion-list>
     <ion-list>
@@ -46,7 +46,7 @@
         <h2></h2>
         <h3>{{step.duration.text}} {{step.distance.text}} </h3>
         <p>{{step.html_instructions}}</p>
-        <button ion-button clear item-end (click)="toViewDetails(step)">Details</button>
+        <button ion-button clear item-end (click)="toViewDetails(steps)">Details</button>
       </ion-item>
     </ion-list>
   </div>

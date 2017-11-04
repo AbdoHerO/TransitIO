@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the DetailsPage page.
@@ -15,14 +15,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DetailsPage {
 
-  private details: any;
+  private details: any[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private viewCtrl: ViewController) {
     this.details = this.navParams.get('details');
   }
 
   ionViewDidLoad() {
     console.log(this.details);
+  }
+
+  private onBackPressed(){
+    this.viewCtrl.dismiss();
   }
 
 }

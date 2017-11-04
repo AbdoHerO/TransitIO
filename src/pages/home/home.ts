@@ -1,7 +1,6 @@
 import { MapviewPage } from './../mapview/mapview';
 import { DetailsPage } from './../details/details';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Place } from './../../models/place.model';
 
 import { REGIONS } from './../../app/regions.array';
 import { TransportServiceProvider } from './../../providers/transport-service/transport-service';
@@ -21,8 +20,6 @@ export class HomePage {
 
   private location: {lat: number, lon: number} = { lon:33.5731,lat:7.5898 };
 
-  private place: Place = {title:"title", location: this.location};
-
   constructor(public navCtrl: NavController,private navParams: NavParams, private transportService: TransportServiceProvider,
   private geolocation: Geolocation,
   private loadingCtrl: LoadingController,
@@ -40,7 +37,6 @@ export class HomePage {
       location => {
         this.location.lat = location.coords.latitude;
         this.location.lon = location.coords.longitude;
-        console.log(this.place);
       }
     ).catch(
       error =>{
@@ -85,9 +81,9 @@ export class HomePage {
     );
   }
 
-  private toViewDetails(step: any){
+  private toViewDetails(steps: any[]){
     this.modalCtrl.create(DetailsPage, {
-      details: step
+      details: steps
     }).present();
   }
 
@@ -111,11 +107,19 @@ export class HomePage {
     }
   }
 
-  private selectOnMap(){
+  private fromSelectOnMap(){
 
     let selectOnMapModal = this.modalCtrl.create(MapviewPage);
-    selectOnMapModal.onDidDismiss(selectedPosition => {
-      console.log(selectedPosition);
+    selectOnMapModal.onDidDismiss(data => {
+      this.destination.from = data.selectedPosition.lat + ", " + data.selectedPosition.lon
+    });
+    selectOnMapModal.present();
+  }
+
+  private toSelectOnMap(){
+    let selectOnMapModal = this.modalCtrl.create(MapviewPage);
+    selectOnMapModal.onDidDismiss(data => {
+      this.destination.to = data.selectedPosition.lat + ", " + data.selectedPosition.lon
     });
     selectOnMapModal.present();
   }
