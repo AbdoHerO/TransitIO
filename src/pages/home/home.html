@@ -1,14 +1,41 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
-      Ionic Blank
+      transitIO
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <div class="search">
+    <form id="search" (ngSubmit)="search(f.value)" #f="ngForm">
+      <ion-list inset padding>
+        <ion-item>
+          <ion-icon name="pin" item-right (click)="selectOnMap()"></ion-icon>
+          <ion-input type="text" name="from" ngModel required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="pin" item-right (click)="selectOnMap()"></ion-icon>
+          <ion-input type="text" name="to" ngModel required></ion-input>
+        </ion-item>
+        <button id="search-button" ion-button outline block form="search" [disabled]="!f.valid" padding>Search</button>
+      </ion-list>
+    </form>
+  </div>
+
+  <div class="result" *ngIf="transitData && transitData.status == 'OK'">
+    <ion-list>
+      <ion-item *ngFor="let step of steps">
+        <ion-icon *ngIf="step.travel_mode == 'TRANSIT'" name="bus" item-start></ion-icon>
+        <ion-icon *ngIf="step.travel_mode == 'WALKING'" name="walk" item-start></ion-icon>
+        <h2></h2>
+        <h3>{{step.duration.text}}</h3>
+        <p>{{step.html_instructions}}</p>
+        <button ion-button clear item-end (click)="toViewDetails(step)">View Details</button>
+
+      </ion-item>
+    </ion-list>
+  </div>
+
 </ion-content>
