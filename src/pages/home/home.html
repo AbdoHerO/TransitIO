@@ -8,32 +8,45 @@
 
 <ion-content>
   <div class="search">
-    <form id="search" (ngSubmit)="search(f.value)" #f="ngForm">
-      <ion-list inset padding>
-        <ion-item>
-          <ion-icon name="pin" item-right (click)="selectOnMap()"></ion-icon>
-          <ion-input type="text" name="from" ngModel required></ion-input>
-        </ion-item>
 
-        <ion-item>
-          <ion-icon name="pin" item-right (click)="selectOnMap()"></ion-icon>
-          <ion-input type="text" name="to" ngModel required></ion-input>
-        </ion-item>
-        <button id="search-button" ion-button outline block form="search" [disabled]="!f.valid" padding>Search</button>
-      </ion-list>
-    </form>
+    <ion-list inset padding>
+      <ion-item>
+        <button ion-button (click)="selectOnMap()" clear icon-only item-right>
+          <ion-icon name="locate"></ion-icon>
+        </button>
+        <ion-input type="text" placeholder="From:" [(ngModel)]="destination.from"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button (click)="selectOnMap()" clear icon-only item-right>
+          <ion-icon name="locate"></ion-icon>
+        </button>
+        <ion-input type="text" placeholder="To:" [(ngModel)]="destination.to"></ion-input>
+      </ion-item>
+
+      <button id="search-button" ion-button outline block padding (click)="search()">Search</button>
+
+    </ion-list>
+
   </div>
 
   <div class="result" *ngIf="transitData && transitData.status == 'OK'">
+    <ion-list>
+      <ion-item>
+        <ion-icon name="time" item-start></ion-icon>
+        <h1>Departure: {{transitData.routes[0].legs[0].departure_time.text}}</h1>
+        <h2>Arrival: {{transitData.routes[0].legs[0].arrival_time.text}}</h2>
+        <h2>Distance: {{transitData.routes[0].legs[0].distance.text}}</h2>
+      </ion-item>
+    </ion-list>
     <ion-list>
       <ion-item *ngFor="let step of steps">
         <ion-icon *ngIf="step.travel_mode == 'TRANSIT'" name="bus" item-start></ion-icon>
         <ion-icon *ngIf="step.travel_mode == 'WALKING'" name="walk" item-start></ion-icon>
         <h2></h2>
-        <h3>{{step.duration.text}}</h3>
+        <h3>{{step.duration.text}} {{step.distance.text}} </h3>
         <p>{{step.html_instructions}}</p>
-        <button ion-button clear item-end (click)="toViewDetails(step)">View Details</button>
-
+        <button ion-button clear item-end (click)="toViewDetails(step)">Details</button>
       </ion-item>
     </ion-list>
   </div>

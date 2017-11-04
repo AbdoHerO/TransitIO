@@ -6,7 +6,7 @@ import { Place } from './../../models/place.model';
 import { REGIONS } from './../../app/regions.array';
 import { TransportServiceProvider } from './../../providers/transport-service/transport-service';
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ModalController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, AlertController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -23,7 +23,7 @@ export class HomePage {
 
   private place: Place = {title:"title", location: this.location};
 
-  constructor(public navCtrl: NavController, private transportService: TransportServiceProvider,
+  constructor(public navCtrl: NavController,private navParams: NavParams, private transportService: TransportServiceProvider,
   private geolocation: Geolocation,
   private loadingCtrl: LoadingController,
   private modalCtrl: ModalController,
@@ -59,8 +59,6 @@ export class HomePage {
     });
 
     loading.present();
-    
-    this.steps = [];
 
     this.transportService.getBusData(fromDestination, toDestination).subscribe(
       result => {
@@ -73,10 +71,10 @@ export class HomePage {
         else{
           this.alertCtrl.create(
             {
-              title:"Location not found",
-              message:"The destination information you entered were not found please try again",
+              title:"No information found",
+              message:"We couldn't find any information about your destination... :/",
               buttons:[{
-                text:"Ok",
+                text:"Try again",
                 role:"cancel"
               }]
             }
@@ -93,14 +91,33 @@ export class HomePage {
     }).present();
   }
 
-  private search(searchQuery: any){
-    this.destination = searchQuery;
-    console.log(this.destination);
-    this.getData(this.destination.from, this.destination.to);
+  private search(){
+
+    if(this.destination.from == "" || this.destination.to == ""){
+      this.alertCtrl.create({
+        title: "Missing information",
+        message: "Please select a destination",
+        buttons:[
+          {
+            text:"Back",
+            role:"cancel"
+          }
+        ]
+      }).present();
+    }
+    else{
+      console.log(this.destination);
+      this.getData(this.destination.from, this.destination.to);
+    }
   }
 
   private selectOnMap(){
-    this.modalCtrl.create(MapviewPage).present();
+
+    let selectOnMapModal = this.modalCtrl.create(MapviewPage);
+    selectOnMapModal.onDidDismiss(selectedPosition => {
+      console.log(selectedPosition);
+    });
+    selectOnMapModal.present();
   }
 
 }

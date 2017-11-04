@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 declare var google:any;
 @IonicPage()
@@ -12,10 +12,13 @@ export class MapviewPage {
   @ViewChild('map') mapRef: ElementRef;
 
   private location:{lat: number, lon: number} = { lat:33.589886 , lon: -7.603869 };
+  selectedPosition:{lat: number, lon: number} = { lat: 0, lon:0 };
+  private marker;
+  private map;
+  
 
-  private selectedPosition:{lat: number, lon: number} = { lat: 0 , lon: 0};
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private viewCtrl: ViewController) {
   }
 
   ionViewDidLoad() {
@@ -33,31 +36,45 @@ export class MapviewPage {
       streetViewControl: false
     }
 
-    const map = new google.maps.Map(this.mapRef.nativeElement, options);
+    var map = new google.maps.Map(this.mapRef.nativeElement, options);
 
-    let marker;
     map.addListener('click', function(e) {
-
-      this.selectedPosition = {lat: e.latLng.lat(), lon: e.latLng.lng()};
-
-      console.log(this.selectedPosition);
       //if there's no marker on the map add marker
-      if(marker == null){
-        marker = new google.maps.Marker({
-          title: 'From Location',
-          animation: 'DROP',
+      if(this.marker == null){
+        this.marker = new google.maps.Marker({
           position: e.latLng,
-          map: map
+          map: map,
+          draggable:true
         });
       }
-
       //set new position to the marker
       else{
-        marker.setPosition(e.latLng);
+        this.marker.setPosition(e.latLng);
       }
-      
+      //center map to selected marker
       map.panTo(e.latLng);
+      this.selectedPosition = {lon: this.marker.getPosition().lng(), lat: this.marker.getPosition().lat() };
     });
+
   }
 
+  
+
+  private onConfirm(){
+    console.log(this.selectedPosition);
+    if(this.selectedPosition.lat == 0 && this.selectedPosition.lon == 0){
+      console.error("No selected postion");
+    }
+    else{
+      
+    }
+  }
+
+  private onBackPressed(){
+    
+    this.viewCtrl.dismiss({
+      selectedPosition: this.selectedPosition
+    });
+
+  }
 }
