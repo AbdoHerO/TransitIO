@@ -1,11 +1,13 @@
+import { AboutPage } from './../about/about';
+import { HistoryPage } from './../history/history';
+import { BookmarksPage } from './../bookmarks/bookmarks';
 import { Step, Location, TransitData } from './../../models/transitdata.interface';
 import { MapviewPage } from './../mapview/mapview';
 import { DetailsPage } from './../details/details';
 
-import { REGIONS } from './../../app/regions.array';
 import { TransportServiceProvider } from './../../providers/transport-service/transport-service';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, LoadingController, ModalController, AlertController, NavParams } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, AlertController, NavParams, MenuController } from 'ionic-angular';
 
 import polyline  from '@mapbox/polyline';
 
@@ -28,7 +30,9 @@ export class HomePage {
   constructor(public navCtrl: NavController,private navParams: NavParams, private transportService: TransportServiceProvider,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController) 
+    private alertCtrl: AlertController,
+    private menuCtrl: MenuController
+  ) 
   {
 
   }
@@ -167,6 +171,25 @@ export class HomePage {
       }
     });
     selectOnMapModal.present();
+  }
+
+  private openMenu(){
+    this.menuCtrl.open();
+  }
+
+  private toHistoryPage(){
+    this.menuCtrl.close();
+    this.navCtrl.push(HistoryPage);
+  }
+
+  private toBookmarksPage(){
+    this.menuCtrl.close();
+    this.navCtrl.push(BookmarksPage);
+  }
+
+  private toAboutPage(){
+    this.menuCtrl.close();
+    this.navCtrl.push(AboutPage);
   }
 
 }

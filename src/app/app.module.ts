@@ -1,3 +1,6 @@
+import { AboutPage } from './../pages/about/about';
+import { HistoryPage } from './../pages/history/history';
+import { BookmarksPage } from './../pages/bookmarks/bookmarks';
 import { MapviewPage } from './../pages/mapview/mapview';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,6 +10,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { HttpModule } from '@angular/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -15,16 +19,21 @@ import { TransportServiceProvider } from '../providers/transport-service/transpo
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder'
 import { ElasticHeaderModule } from "ionic2-elastic-header/dist";
+import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     DetailsPage,
-    MapviewPage
+    MapviewPage,
+    BookmarksPage,
+    HistoryPage,
+    AboutPage
   ],
   imports: [
     BrowserModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp,{
       modalEnter: 'modal-slide-in',
       modalLeave: 'modal-slide-out',
@@ -39,7 +48,10 @@ import { ElasticHeaderModule } from "ionic2-elastic-header/dist";
     MyApp,
     HomePage,
     DetailsPage,
-    MapviewPage
+    MapviewPage,
+    BookmarksPage,
+    HistoryPage,
+    AboutPage
   ],
   providers: [
     StatusBar,
@@ -47,7 +59,9 @@ import { ElasticHeaderModule } from "ionic2-elastic-header/dist";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TransportServiceProvider, 
     Geolocation,
-    NativeGeocoder
+    NativeGeocoder,
+    BookmarksProvider
   ]
 })
+
 export class AppModule {}
