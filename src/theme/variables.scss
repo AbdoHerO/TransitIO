@@ -5,6 +5,13 @@ $app-direction: ltr;
 
 @import "ionic.globals";
 
+@font-face {
+  font-family: "Asap-Regular";
+  src: url($font-path + '/Asap-Regular.ttf');
+}
+
+$font-family-base: "Asap-Regular";
+
 
 $toolbar-background: #3f51b5;
 
