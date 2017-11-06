@@ -50,11 +50,11 @@ export class HomePage {
 
     const options = {
       center: startLocation,
-      zoom: 12,
+      zoom: 10,
       streetViewControl: false,
       disableDefaultUI: true,
       zoomControl: false,
-      dragable: false
+      draggable: false
     }
 
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
