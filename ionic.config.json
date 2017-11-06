@@ -1,6 +1,6 @@
 {
   "name": "TransportIO",
-  "app_id": "",
+  "app_id": "f67d414f",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
