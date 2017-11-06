@@ -12,6 +12,8 @@ log.txt
 .vscode/
 npm-debug.log*
 
+src/app/google_api_key.const.ts
+
 .idea/
 .sourcemaps/
 .sass-cache/
