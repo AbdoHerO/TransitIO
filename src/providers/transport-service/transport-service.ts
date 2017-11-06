@@ -1,4 +1,4 @@
-import { GOOGLE_API_KEY } from './../../app/google_api_key.const';
+import { GOOGLE_API_KEY } from './../../app/google_api.key';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';

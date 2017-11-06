@@ -1,6 +1,5 @@
 import { MapviewPage } from './../pages/mapview/mapview';
 
-import { GOOGLE_MAP_API_KEY } from './google_api_key.const';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
