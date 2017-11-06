@@ -101,9 +101,10 @@ export class HomePage {
         if(result.status == "OK"){
           this.transitData = result;
           this.steps = this.transitData.routes[0].legs[0].steps;
+          //wait 100ms then load the showMap function because the map isn't available before and thus can't be loaded
           setTimeout(() =>{
             this.showMap();
-          },500);
+          },100);
 
         }
         else{
@@ -134,7 +135,7 @@ export class HomePage {
     if(this.destination.from == "" || this.destination.to == ""){
       this.alertCtrl.create({
         title: "Missing information",
-        message: "Please select a destination",
+        message: "Please select a destination!",
         buttons:[
           {
             text:"Back",

@@ -1,5 +1,16 @@
 page-home {
+    ion-navbar{
+        text-align: center;
+    }
     #search-button{
         margin-top: 20px;
+    }
+
+    .noData{
+        text-align: center;
+        h2{
+            font-size: 300%;
+            color: #c5cae9;
+        }
     }
 }

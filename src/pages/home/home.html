@@ -8,40 +8,36 @@
 
 <ion-content>
   <div class="search">
-
     <ion-list inset padding>
       <ion-item>
         <button ion-button (click)="fromSelectOnMap()" clear icon-only item-right>
-          <ion-icon name="locate"></ion-icon>
+          <ion-icon name="locate" large></ion-icon>
         </button>
-        <ion-input type="text" placeholder="From:" [(ngModel)]="destination.from"></ion-input>
+        <ion-input type="text" placeholder="Eg: Ain Sebaa" [(ngModel)]="destination.from"></ion-input>
       </ion-item>
-
       <ion-item>
         <button ion-button (click)="toSelectOnMap()" clear icon-only item-right>
-          <ion-icon name="locate"></ion-icon>
+          <ion-icon name="locate" large></ion-icon>
         </button>
-        <ion-input type="text" placeholder="To:" [(ngModel)]="destination.to"></ion-input>
+        <ion-input type="text" placeholder="Eg: Ouasis" [(ngModel)]="destination.to"></ion-input>
       </ion-item>
-
       <button id="search-button" ion-button outline block padding (click)="search()">Search</button>
-
     </ion-list>
-
   </div>
+
+    <div class="noData" *ngIf="transitData == undefined">
+      <h2>
+        ¯&#92;_(ツ)_/¯
+      </h2>
+    </div>
 
   <div class="result" *ngIf="transitData && transitData.status == 'OK'">
     <ion-card>
-
-      <img src="img/advance-card-map-madison.png">
       <div id="resultMap" #resultMap style="width: 100%; height:400px;"></div>
-
       <ion-item>
-        <ion-icon name="information-circle" item-start large></ion-icon>
-        <h1>{{transitData.routes[0].legs[0].duration.text}}</h1>
+        <ion-icon name="information-circle" item-start></ion-icon>
+        <h1>{{transitData.routes[0].legs[0].duration.text}} to arrive</h1>
         <h2>Departure: {{transitData.routes[0].legs[0].departure_time.text}}, Arrival: {{transitData.routes[0].legs[0].arrival_time.text}}</h2>
-        <h2>From: {{transitData.routes[0].legs[0].start_address}}</h2>
-        <h2>To: {{transitData.routes[0].legs[0].end_address}}</h2>
         <h2>Distance: {{transitData.routes[0].legs[0].distance.text}}</h2>
       </ion-item>
     </ion-card>
@@ -57,13 +53,10 @@
           <h3>{{step.duration.text}} {{step.distance.text}} </h3>
           <p>{{step.html_instructions}}</p>
           <button ion-button clear icon-only item-end (click)="toViewDetails(step)">
-            <ion-icon name="information-circle"></ion-icon>
+            <ion-icon name="information-circle" large></ion-icon>
           </button>
         </ion-item>
-
       </ion-list>
     </ion-card>
-
   </div>
-
 </ion-content>
