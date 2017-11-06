@@ -18,7 +18,6 @@ import { DetailsPage } from './../pages/details/details';
 import { TransportServiceProvider } from '../providers/transport-service/transport-service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder'
-import { ElasticHeaderModule } from "ionic2-elastic-header/dist";
 import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
 
 @NgModule({
@@ -39,8 +38,7 @@ import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
       modalLeave: 'modal-slide-out',
       pageTransition: 'ios-transition'
     }),
-    HttpModule,
-    ElasticHeaderModule
+    HttpModule
 
   ],
   bootstrap: [IonicApp],

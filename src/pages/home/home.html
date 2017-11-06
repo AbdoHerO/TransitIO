@@ -1,4 +1,4 @@
-<ion-header [elasticHeader]="content">
+<ion-header>
   <ion-navbar>
     <ion-buttons left (click)="openMenu()" menuOpen>
       <button ion-button icon-only>
@@ -45,9 +45,14 @@
       </button>
     </ion-list>
   </ion-content>
+  <ion-footer>
+
+    <h4>Version: beta_1.3</h4>
+
+  </ion-footer>
 </ion-menu>
 
-<ion-content fullscreen #content>
+<ion-content>
   <div class="search">
     <ion-list inset padding>
       <ion-item>
