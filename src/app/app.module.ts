@@ -27,7 +27,8 @@ import { ElasticHeaderModule } from "ionic2-elastic-header/dist";
     BrowserModule,
     IonicModule.forRoot(MyApp,{
       modalEnter: 'modal-slide-in',
-      modalLeave: 'modal-slide-out'
+      modalLeave: 'modal-slide-out',
+      pageTransition: 'ios-transition'
     }),
     HttpModule,
     ElasticHeaderModule
