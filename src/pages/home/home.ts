@@ -49,8 +49,8 @@ export class HomePage {
     );
 
     const options = {
-      center: startLocation,
-      zoom: 10,
+      center: endLocation,
+      zoom: 12,
       streetViewControl: false,
       disableDefaultUI: true,
       zoomControl: false,
@@ -61,14 +61,14 @@ export class HomePage {
     var startMarker = new google.maps.Marker({
       position: startLocation,
       map: this.map,
-      dragable: false,
+      draggable: false,
       label: "A"
     });
 
     var endMarker = new google.maps.Marker({
       position: endLocation,
       map: this.map,
-      dragable: false,
+      draggable: false,
       label:"B"
     });
 
@@ -162,7 +162,6 @@ export class HomePage {
   private toSelectOnMap(){
     let selectOnMapModal = this.modalCtrl.create(MapviewPage);
     selectOnMapModal.onDidDismiss(data => {
-      console.log(data);
       if(data != undefined){
         this.destination.to = data.selectedPosition.lat + ", " + data.selectedPosition.lng;
       }

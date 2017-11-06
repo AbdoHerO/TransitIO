@@ -14,6 +14,7 @@ import { DetailsPage } from './../pages/details/details';
 import { TransportServiceProvider } from '../providers/transport-service/transport-service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder'
+import { ElasticHeaderModule } from "ionic2-elastic-header/dist";
 
 @NgModule({
   declarations: [
@@ -24,8 +25,12 @@ import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/nativ
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpModule
+    IonicModule.forRoot(MyApp,{
+      modalEnter: 'modal-slide-in',
+      modalLeave: 'modal-slide-out'
+    }),
+    HttpModule,
+    ElasticHeaderModule
 
   ],
   bootstrap: [IonicApp],

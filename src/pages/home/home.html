@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [elasticHeader]="content">
   <ion-navbar color="primary">
     <ion-title>
       transitIO
@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen #content>
   <div class="search">
     <ion-list inset padding>
       <ion-item>
