@@ -14,6 +14,7 @@ import { HomePage } from '../pages/home/home';
 import { DetailsPage } from './../pages/details/details';
 import { TransportServiceProvider } from '../providers/transport-service/transport-service';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TransportServiceProvider, 
-    Geolocation
+    Geolocation,
+    NativeGeocoder
   ]
 })
 export class AppModule {}

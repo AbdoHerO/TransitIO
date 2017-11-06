@@ -1,11 +1,15 @@
+import { Step, Location, TransitData } from './../../models/transitdata.interface';
 import { MapviewPage } from './../mapview/mapview';
 import { DetailsPage } from './../details/details';
-import { Geolocation } from '@ionic-native/geolocation';
 
 import { REGIONS } from './../../app/regions.array';
 import { TransportServiceProvider } from './../../providers/transport-service/transport-service';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, LoadingController, ModalController, AlertController, NavParams } from 'ionic-angular';
+
+import polyline  from '@mapbox/polyline';
+
+declare var google:any;
 
 @Component({
   selector: 'page-home',
@@ -13,18 +17,19 @@ import { NavController, LoadingController, ModalController, AlertController, Nav
 })
 export class HomePage {
 
-  private transitData: any;
-  private steps: any[] = [];
-  //private regions: string[] = REGIONS;
-  private destination: {from: string, to:string} = { from: "", to: ""};
+  @ViewChild('resultMap') mapRef: ElementRef;
 
-  private location: {lat: number, lon: number} = { lon:33.5731,lat:7.5898 };
+  private transitData: TransitData;
+  private steps: Step[] = [];
+  private destination: {from: string, to:string} = { from: "", to: ""};
+  private polylinePoints: Location[] = [];
+  private map;
 
   constructor(public navCtrl: NavController,private navParams: NavParams, private transportService: TransportServiceProvider,
-  private geolocation: Geolocation,
-  private loadingCtrl: LoadingController,
-  private modalCtrl: ModalController,
-  private alertCtrl: AlertController) {
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController) 
+  {
 
   }
 
@@ -32,37 +37,74 @@ export class HomePage {
     
   }
 
-  private getPosition(){
-    this.geolocation.getCurrentPosition().then(
-      location => {
-        this.location.lat = location.coords.latitude;
-        this.location.lon = location.coords.longitude;
-      }
-    ).catch(
-      error =>{
-       console.error("Error getting location");
-      }
+  private showMap(){
+    
+    var startLocation = new google.maps.LatLng(
+      this.transitData.routes[0].legs[0].start_location.lat,
+      this.transitData.routes[0].legs[0].start_location.lng
     );
+    var endLocation = new google.maps.LatLng(
+      this.transitData.routes[0].legs[0].end_location.lat,
+      this.transitData.routes[0].legs[0].end_location.lng
+    );
+
+    const options = {
+      center: startLocation,
+      zoom: 12,
+      streetViewControl: false,
+      disableDefaultUI: true,
+      zoomControl: false,
+      dragable: false
+    }
+
+    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+    var startMarker = new google.maps.Marker({
+      position: startLocation,
+      map: this.map,
+      dragable: false,
+      label: "A"
+    });
+
+    var endMarker = new google.maps.Marker({
+      position: endLocation,
+      map: this.map,
+      dragable: false,
+      label:"B"
+    });
+
+    let polylineArray = polyline.decode(this.transitData.routes[0].overview_polyline.points);
+  
+    for(let i = 0; i < polylineArray.length; i++){
+      this.polylinePoints.push({lat: polylineArray[i][0], lng: polylineArray[i][1]});
+    }
+    
+    console.log(this.polylinePoints);
+
+    var path = new google.maps.Polyline({
+      path: this.polylinePoints,
+      strokeColor: '#3f51b5',
+      strokeOpacity: 0.8,
+      strokeWeight: 5,
+      map: this.map
+    });
 
   }
 
+
   private getData(fromDestination, toDestination){
-    //get current position
-    this.getPosition();
-
     const loading = this.loadingCtrl.create({
-      content: "Loading transit information"
+      content: "Loading results! Please wait..."
     });
-
     loading.present();
-
     this.transportService.getBusData(fromDestination, toDestination).subscribe(
       result => {
-        console.info(result);
         if(result.status == "OK"){
           this.transitData = result;
-          this.steps = this.transitData.routes[0].legs[0].steps
-          console.log(this.steps);
+          this.steps = this.transitData.routes[0].legs[0].steps;
+          setTimeout(() =>{
+            this.showMap();
+          },500);
+
         }
         else{
           this.alertCtrl.create(
@@ -77,18 +119,18 @@ export class HomePage {
           ).present();
         }
         loading.dismiss();
+        
       }
     );
   }
 
-  private toViewDetails(steps: any[]){
+  private toViewDetails(step: Step){
     this.modalCtrl.create(DetailsPage, {
-      details: steps
+      details: step
     }).present();
   }
 
   private search(){
-
     if(this.destination.from == "" || this.destination.to == ""){
       this.alertCtrl.create({
         title: "Missing information",
@@ -102,16 +144,16 @@ export class HomePage {
       }).present();
     }
     else{
-      console.log(this.destination);
       this.getData(this.destination.from, this.destination.to);
     }
   }
 
   private fromSelectOnMap(){
-
     let selectOnMapModal = this.modalCtrl.create(MapviewPage);
     selectOnMapModal.onDidDismiss(data => {
-      this.destination.from = data.selectedPosition.lat + ", " + data.selectedPosition.lon
+      if(data != undefined){
+        this.destination.from = data.selectedPosition.lat + ", " + data.selectedPosition.lng;
+      }
     });
     selectOnMapModal.present();
   }
@@ -119,7 +161,10 @@ export class HomePage {
   private toSelectOnMap(){
     let selectOnMapModal = this.modalCtrl.create(MapviewPage);
     selectOnMapModal.onDidDismiss(data => {
-      this.destination.to = data.selectedPosition.lat + ", " + data.selectedPosition.lon
+      console.log(data);
+      if(data != undefined){
+        this.destination.to = data.selectedPosition.lat + ", " + data.selectedPosition.lng;
+      }
     });
     selectOnMapModal.present();
   }

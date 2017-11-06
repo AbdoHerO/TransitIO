@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary" >
+  <ion-navbar color="primary">
     <ion-buttons left>
       <button ion-button icon-only (click)="onBackPressed()">
         <ion-icon name="arrow-back"></ion-icon>
@@ -10,10 +10,40 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides>
-    <ion-slide *ngFor="let step of details">
-      <h1>{{step.html_instructions}}</h1>
-      <h2>for {{step.duration.text}}</h2>
-    </ion-slide>
-  </ion-slides>
+
+  <ion-card>
+
+    <div id="detailsMap" #detailsMap style="width: 100%; height:400px;"></div>
+
+    <ion-list *ngIf="detail.travel_mode=='TRANSIT'">
+      <ion-item>
+        <ion-icon name="bus" item-start large></ion-icon>
+        <h1>Num: {{detail.transit_details.line.short_name}}</h1>
+        <h2>{{detail.html_instructions}}</h2>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="navigate" item-left large></ion-icon>
+        <h1>From: {{detail.transit_details.departure_stop.name}}</h1>
+        <h2>To: {{detail.transit_details.arrival_stop.name}}</h2>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="time" item-left large></ion-icon>
+        <h1>Departure: {{detail.transit_details.departure_time.text}}</h1>
+        <h2>Duration: {{detail.duration.text}}</h2>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="detail.travel_mode=='WALKING'">
+      <ion-item>
+        <ion-icon name="walk" item-start large></ion-icon>
+        <h1></h1>
+        <h2>{{detail.distance.text}}</h2>
+        <p>{{detail.html_instructions}}</p>
+      </ion-item>
+    </ion-list>
+
+  </ion-card>
+
 </ion-content>

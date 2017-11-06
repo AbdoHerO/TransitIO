@@ -1,9 +1,11 @@
-import { Location } from './../../models/location.interface';
+import { Location } from './../../models/transitdata.interface';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController, AlertController } from 'ionic-angular';
 
+//the google variable
 declare var google:any;
+
 @IonicPage()
 @Component({
   selector: 'page-mapview',
@@ -13,14 +15,14 @@ export class MapviewPage {
 
   @ViewChild('map') mapRef: ElementRef;
 
-  private defaultLocation:Location = { lat:33.589886 , lon: -7.603869 };
-  private userLocation:Location = { lat: 0 , lon: 0 };
-  private selectedPosition:Location = { lat: 0, lon:0 };
+  private defaultLocation:Location = { lat:33.589886 , lng: -7.603869 };
+  private userLocation:Location = { lat: 0 , lng: 0 };
+  private selectedPosition:Location = { lat: 0, lng:0 };
   private static marker;
   private map;
-  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     private viewCtrl: ViewController,
     private geolocation: Geolocation,
     private loadingCtrl: LoadingController,
@@ -42,7 +44,7 @@ export class MapviewPage {
     this.geolocation.getCurrentPosition().then(
       userPosition => {
         this.userLocation.lat = userPosition.coords.latitude;
-        this.userLocation.lon = userPosition.coords.longitude;
+        this.userLocation.lng = userPosition.coords.longitude;
         loadingLocation.dismiss();
       }
     ).catch(
@@ -73,7 +75,7 @@ export class MapviewPage {
   }
 
   private locateMe(){
-    const userPosition = new google.maps.LatLng(this.userLocation.lat, this.userLocation.lon);
+    const userPosition = new google.maps.LatLng(this.userLocation.lat, this.userLocation.lng);
     this.map.setCenter(userPosition);
     this.map.setZoom(15);
     if(MapviewPage.marker == null){
@@ -83,22 +85,23 @@ export class MapviewPage {
         draggable:true
       });
     }
-    
-    else
-    MapviewPage.marker.setPosition(userPosition);
-
+    else{  
+      MapviewPage.marker.setPosition(userPosition);
+    }
     this.selectedPosition = this.userLocation;
   }
 
   private showMap(){
-    const location = new google.maps.LatLng(this.defaultLocation.lat, this.defaultLocation.lon);
+    const location = new google.maps.LatLng(this.defaultLocation.lat, this.defaultLocation.lng);
     console.log(location);
     //map options
 
     const options = {
       center: location,
       zoom: 10,
-      streetViewControl: false
+      streetViewControl: false,
+      disableDefaultUI: true,
+      zoomControl: false
     }
 
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -119,9 +122,6 @@ export class MapviewPage {
       //center map to selected marker
       this.panTo(e.latLng);
     });
-
-    console.log(MapviewPage.marker);
-  
   }
 
   private onConfirm(){ 
@@ -129,7 +129,7 @@ export class MapviewPage {
       console.error("No selected postion");
     }
     else{
-      this.selectedPosition = {lat: MapviewPage.marker.getPosition().lat(), lon: MapviewPage.marker.getPosition().lng()};
+      this.selectedPosition = {lat: MapviewPage.marker.getPosition().lat(), lng: MapviewPage.marker.getPosition().lng()};
       console.log(this.selectedPosition);
       this.viewCtrl.dismiss({
         selectedPosition: this.selectedPosition

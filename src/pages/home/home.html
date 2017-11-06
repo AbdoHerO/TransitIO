@@ -31,24 +31,39 @@
   </div>
 
   <div class="result" *ngIf="transitData && transitData.status == 'OK'">
-    <ion-list>
+    <ion-card>
+
+      <img src="img/advance-card-map-madison.png">
+      <div id="resultMap" #resultMap style="width: 100%; height:400px;"></div>
+
       <ion-item>
-        <ion-icon name="time" item-start></ion-icon>
-        <h1>Duration: {{transitData.routes[0].legs[0].duration.text}}</h1>
+        <ion-icon name="information-circle" item-start large></ion-icon>
+        <h1>{{transitData.routes[0].legs[0].duration.text}}</h1>
         <h2>Departure: {{transitData.routes[0].legs[0].departure_time.text}}, Arrival: {{transitData.routes[0].legs[0].arrival_time.text}}</h2>
-        <h3>Distance: {{transitData.routes[0].legs[0].distance.text}}</h3>
+        <h2>From: {{transitData.routes[0].legs[0].start_address}}</h2>
+        <h2>To: {{transitData.routes[0].legs[0].end_address}}</h2>
+        <h2>Distance: {{transitData.routes[0].legs[0].distance.text}}</h2>
       </ion-item>
-    </ion-list>
-    <ion-list>
-      <ion-item *ngFor="let step of steps">
-        <ion-icon *ngIf="step.travel_mode == 'TRANSIT'" name="bus" item-start></ion-icon>
-        <ion-icon *ngIf="step.travel_mode == 'WALKING'" name="walk" item-start></ion-icon>
-        <h2></h2>
-        <h3>{{step.duration.text}} {{step.distance.text}} </h3>
-        <p>{{step.html_instructions}}</p>
-        <button ion-button clear item-end (click)="toViewDetails(steps)">Details</button>
-      </ion-item>
-    </ion-list>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        More Information
+      </ion-card-header>
+      <ion-list>
+        <ion-item *ngFor="let step of steps">
+          <ion-icon *ngIf="step.travel_mode == 'TRANSIT'" name="bus" item-start></ion-icon>
+          <ion-icon *ngIf="step.travel_mode == 'WALKING'" name="walk" item-start></ion-icon>
+          <h2 *ngIf="step.travel_mode == 'TRANSIT'">Bus: {{step.transit_details.line.short_name}}</h2>
+          <h3>{{step.duration.text}} {{step.distance.text}} </h3>
+          <p>{{step.html_instructions}}</p>
+          <button ion-button clear icon-only item-end (click)="toViewDetails(step)">
+            <ion-icon name="information-circle"></ion-icon>
+          </button>
+        </ion-item>
+
+      </ion-list>
+    </ion-card>
+
   </div>
 
 </ion-content>
