@@ -35,4 +35,5 @@ test/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-final/
+
+release/
