@@ -34,7 +34,7 @@ export class HomePage {
     private menuCtrl: MenuController
   ) 
   {
-
+    
   }
 
   ionViewWillEnter(){

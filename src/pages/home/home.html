@@ -10,7 +10,6 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-menu [content]="content">
   <ion-header>
     <ion-navbar color="primary">
@@ -24,21 +23,17 @@
       </ion-title>
     </ion-navbar>
   </ion-header>
-
   <ion-content>
     <ion-list>
       <button ion-item (click)="toHistoryPage()" no-lines>
         <ion-icon name="list-box" item-start></ion-icon>
         <h2>History</h2>
       </button>
-
       <button ion-item (click)="toBookmarksPage()" no-lines>
         <ion-icon name="bookmarks" item-start></ion-icon>
         <h2>Bookmarks</h2>
       </button>
-
       <hr>
-
       <button ion-item (click)="toAboutPage()">
         <ion-icon name="information-circle" item-start></ion-icon>
         <h2>About</h2>
@@ -46,10 +41,9 @@
     </ion-list>
   </ion-content>
   <ion-footer>
-    <h4>Version: beta_1.3</h4>
+    <p>Version: beta_1.3</p>
   </ion-footer>
 </ion-menu>
-
 <ion-content #content>
   <div class="search">
     <ion-list inset padding>
@@ -68,18 +62,13 @@
       <button id="search-button" ion-button outline block padding (click)="search()">Search</button>
     </ion-list>
   </div>
-
   <div class="noData" *ngIf="transitData == undefined">
     <h2>
       ¯&#92;_(ツ)_/¯
     </h2>
   </div>
-
   <div class="result" *ngIf="transitData && transitData.status == 'OK'">
     <ion-card>
-
-
-
       <div id="resultMap" #resultMap style="width: 100%; height:400px;"></div>
       <ion-fab right bottom>
         <button ion-fab (click)="bookmark()">
