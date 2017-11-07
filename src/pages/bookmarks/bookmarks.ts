@@ -1,3 +1,6 @@
+import { ViewBookmarkPage } from './../view-bookmark/view-bookmark';
+import { TransitData } from './../../models/transitdata.interface';
+import { BookmarksProvider } from './../../providers/bookmarks/bookmarks';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -15,11 +18,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BookmarksPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private bookmarks: TransitData[] = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private bookmarksProvier: BookmarksProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BookmarksPage');
+  ionViewWillEnter(){
+    this.getBookmarks();
+  }
+
+  private getBookmarks(){
+    this.bookmarksProvier.getBookmarks().then(
+      result => {
+        this.bookmarks = result;
+        console.log(this.bookmarks);
+      }
+    );
+  }
+
+  private viewBookmark(bookmark: TransitData){
+    this.navCtrl.push(ViewBookmarkPage, {
+      bookmark: bookmark
+    });
   }
 
 }

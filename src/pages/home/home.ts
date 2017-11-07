@@ -1,3 +1,4 @@
+import { BookmarksProvider } from './../../providers/bookmarks/bookmarks';
 import { AboutPage } from './../about/about';
 import { HistoryPage } from './../history/history';
 import { BookmarksPage } from './../bookmarks/bookmarks';
@@ -31,10 +32,11 @@ export class HomePage {
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private bookmarksProvider: BookmarksProvider
   ) 
   {
-    
+
   }
 
   ionViewWillEnter(){
@@ -81,8 +83,6 @@ export class HomePage {
     for(let i = 0; i < polylineArray.length; i++){
       this.polylinePoints.push({lat: polylineArray[i][0], lng: polylineArray[i][1]});
     }
-    
-    console.log(this.polylinePoints);
 
     var path = new google.maps.Polyline({
       path: this.polylinePoints,
@@ -91,9 +91,7 @@ export class HomePage {
       strokeWeight: 5,
       map: this.map
     });
-
   }
-
 
   private getData(fromDestination, toDestination){
     const loading = this.loadingCtrl.create({
@@ -124,7 +122,6 @@ export class HomePage {
           ).present();
         }
         loading.dismiss();
-        
       }
     );
   }
@@ -171,6 +168,10 @@ export class HomePage {
       }
     });
     selectOnMapModal.present();
+  }
+
+  private addToBookmarks(){
+    this.bookmarksProvider.addBookmark(this.transitData);
   }
 
   private openMenu(){

@@ -1,3 +1,4 @@
+import { ViewBookmarkPage } from './../pages/view-bookmark/view-bookmark';
 import { AboutPage } from './../pages/about/about';
 import { HistoryPage } from './../pages/history/history';
 import { BookmarksPage } from './../pages/bookmarks/bookmarks';
@@ -19,6 +20,7 @@ import { TransportServiceProvider } from '../providers/transport-service/transpo
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder'
 import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
+import { HistoryProvider } from '../providers/history/history';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
     MapviewPage,
     BookmarksPage,
     HistoryPage,
-    AboutPage
+    AboutPage,
+    ViewBookmarkPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
     MapviewPage,
     BookmarksPage,
     HistoryPage,
-    AboutPage
+    AboutPage,
+    ViewBookmarkPage
   ],
   providers: [
     StatusBar,
@@ -58,7 +62,8 @@ import { BookmarksProvider } from '../providers/bookmarks/bookmarks';
     TransportServiceProvider, 
     Geolocation,
     NativeGeocoder,
-    BookmarksProvider
+    BookmarksProvider,
+    HistoryProvider
   ]
 })
 

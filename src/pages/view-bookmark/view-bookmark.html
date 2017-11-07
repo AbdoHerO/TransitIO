@@ -1,0 +1,46 @@
+<!--
+  Generated template for the ViewBookmarkPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>View Bookmark</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <div class="result" *ngIf="bookmark">
+    <ion-card>
+      <div id="bookmarkMap" #bookmarkMap style="width: 100%; height:400px;"></div>
+     
+      <ion-item text-wrap>
+        <ion-icon name="information-circle" item-start></ion-icon>
+        <h1>{{bookmark.routes[0].legs[0].duration.text}} to arrive</h1>
+        <h2>Departure: {{bookmark.routes[0].legs[0].departure_time.text}}, Arrival: {{bookmark.routes[0].legs[0].arrival_time.text}}</h2>
+        <h2>Distance: {{bookmark.routes[0].legs[0].distance.text}}</h2>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        More Information
+      </ion-card-header>
+      <ion-list>
+        <ion-item *ngFor="let step of bookmark.routes[0].legs[0].steps" text-wrap>
+          <ion-icon *ngIf="step.travel_mode == 'TRANSIT'" name="bus" item-start></ion-icon>
+          <ion-icon *ngIf="step.travel_mode == 'WALKING'" name="walk" item-start></ion-icon>
+          <h2 *ngIf="step.travel_mode == 'TRANSIT'">Bus: {{step.transit_details.line.short_name}}</h2>
+          <h3>{{step.duration.text}} {{step.distance.text}} </h3>
+          <p>{{step.html_instructions}}</p>
+          <button ion-button clear icon-only item-end (click)="toViewDetails(step)">
+            <ion-icon name="information-circle" large></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+
+</ion-content>

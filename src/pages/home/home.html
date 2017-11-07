@@ -71,11 +71,11 @@
     <ion-card>
       <div id="resultMap" #resultMap style="width: 100%; height:400px;"></div>
       <ion-fab right bottom>
-        <button ion-fab (click)="bookmark()">
+        <button ion-fab (click)="addToBookmarks()">
           <ion-icon name="bookmark"></ion-icon>
         </button>
       </ion-fab>
-      <ion-item>
+      <ion-item text-wrap>
         <ion-icon name="information-circle" item-start></ion-icon>
         <h1>{{transitData.routes[0].legs[0].duration.text}} to arrive</h1>
         <h2>Departure: {{transitData.routes[0].legs[0].departure_time.text}}, Arrival: {{transitData.routes[0].legs[0].arrival_time.text}}</h2>
@@ -87,7 +87,7 @@
         More Information
       </ion-card-header>
       <ion-list>
-        <ion-item *ngFor="let step of steps">
+        <ion-item *ngFor="let step of steps" text-wrap>
           <ion-icon *ngIf="step.travel_mode == 'TRANSIT'" name="bus" item-start></ion-icon>
           <ion-icon *ngIf="step.travel_mode == 'WALKING'" name="walk" item-start></ion-icon>
           <h2 *ngIf="step.travel_mode == 'TRANSIT'">Bus: {{step.transit_details.line.short_name}}</h2>
