@@ -8,7 +8,7 @@ import { DetailsPage } from './../details/details';
 
 import { TransportServiceProvider } from './../../providers/transport-service/transport-service';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, LoadingController, ModalController, AlertController, NavParams, MenuController } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, AlertController, NavParams, MenuController, ToastController } from 'ionic-angular';
 
 import polyline  from '@mapbox/polyline';
 
@@ -33,7 +33,8 @@ export class HomePage {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private menuCtrl: MenuController,
-    private bookmarksProvider: BookmarksProvider
+    private bookmarksProvider: BookmarksProvider,
+    private toastCtrl: ToastController
   ) 
   {
 
@@ -56,7 +57,7 @@ export class HomePage {
 
     const options = {
       center: endLocation,
-      zoom: 12,
+      zoom: 10,
       streetViewControl: false,
       disableDefaultUI: true,
       zoomControl: false,
@@ -103,7 +104,7 @@ export class HomePage {
         if(result.status == "OK"){
           this.transitData = result;
           this.steps = this.transitData.routes[0].legs[0].steps;
-          //wait 100ms then load the showMap function because the map isn't available before and thus can't be loaded
+          
           setTimeout(() =>{
             this.showMap();
           },100);
@@ -171,6 +172,11 @@ export class HomePage {
   }
 
   private addToBookmarks(){
+    
+    this.toastCtrl.create({
+      message: "Directions added to bookmark",
+      duration: 3000
+    }).present();
     this.bookmarksProvider.addBookmark(this.transitData);
   }
 
