@@ -3,9 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { MapviewPage } from './mapview';
 
 @NgModule({
-  declarations: [
-    MapviewPage,
-  ],
   imports: [
     IonicPageModule.forChild(MapviewPage),
   ],
