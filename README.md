@@ -4,10 +4,10 @@ TransitIO is your real-time urban travel companion.
 Get all the information about public transport, such as: Bus line number, bus stops, travel duration, travel distance and more with accuracy.
 
 # Screenshots
-![Screenshot](screenshots/screenshot_1.png)
-![Screenshot](screenshots/screenshot_2.png)
-![Screenshot](screenshots/screenshot_3.png)
-![Screenshot](screenshots/screenshot_4.png)
+![Screenshot](screenshots/screenshot_1.png =500x)
+![Screenshot](screenshots/screenshot_2.png =500x)
+![Screenshot](screenshots/screenshot_3.png =500x)
+![Screenshot](screenshots/screenshot_4.png =500x)
 
 # Version
 Beta 1.5
