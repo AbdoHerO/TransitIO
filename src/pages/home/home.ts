@@ -172,12 +172,46 @@ export class HomePage {
   }
 
   private addToBookmarks(){
-    
-    this.toastCtrl.create({
-      message: "Directions added to bookmark",
-      duration: 3000
-    }).present();
-    this.bookmarksProvider.addBookmark(this.transitData);
+    this.alertCtrl.create(
+      {
+        title: 'Add to bookmarks!',
+        inputs: [
+          {
+            name: 'name',
+            placeholder: 'Bookmark name'
+          },
+          {
+            name:'comment',
+            placeholder:'Bookmark comment'
+          }
+        ],
+        buttons:[
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.info('Cancel clicked!');
+            }
+          },
+          {
+            text:'Confirm',
+            handler: (data) => {
+              if(data.name != ''){
+                this.bookmarksProvider.addBookmark({name: data.name, comment: data.comment, data: this.transitData});
+                this.toastCtrl.create({
+                  message: 'Bookmark added',
+                  duration: 3000
+                }).present();
+              }
+              else {
+                console.error('No name entered for bookmark')
+                return false;
+              }
+            }
+          }
+        ]
+      }
+    ).present();
   }
 
   private openMenu(){

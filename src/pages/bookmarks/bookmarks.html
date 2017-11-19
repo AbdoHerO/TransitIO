@@ -10,13 +10,9 @@
   <ion-list>
     <ion-item *ngFor="let bookmark of bookmarks" text-wrap>
       <ion-icon name="bookmark" large item-left></ion-icon>
-      <h2>From:</h2>
+      <h2>{{bookmark.name}}</h2>
       <p>
-        {{bookmark.routes[0].legs[0].start_address}}
-      </p>
-      <h2>To:</h2>
-      <p>
-        {{bookmark.routes[0].legs[0].end_address}}
+        {{bookmark.comment}}
       </p>
       <button ion-button outline item-right (click)="viewBookmark(bookmark)">View</button>
     </ion-item>

@@ -1,3 +1,4 @@
+import { Bookmark } from './../../models/bookmark.interface';
 import { DetailsPage } from './../details/details';
 import { TransitData, Location } from './../../models/transitdata.interface';
 import { Component, ViewChild,ElementRef } from '@angular/core';
@@ -16,7 +17,7 @@ export class ViewBookmarkPage {
 
   @ViewChild('bookmarkMap') mapRef: ElementRef;
 
-  private bookmark: TransitData;
+  private bookmark: Bookmark;
   private polylinePoints: Location[] = [];
   private map;
 
@@ -37,12 +38,12 @@ export class ViewBookmarkPage {
   private showMap(){
     
     var startLocation = new google.maps.LatLng(
-      this.bookmark.routes[0].legs[0].start_location.lat,
-      this.bookmark.routes[0].legs[0].start_location.lng
+      this.bookmark.data.routes[0].legs[0].start_location.lat,
+      this.bookmark.data.routes[0].legs[0].start_location.lng
     );
     var endLocation = new google.maps.LatLng(
-      this.bookmark.routes[0].legs[0].end_location.lat,
-      this.bookmark.routes[0].legs[0].end_location.lng
+      this.bookmark.data.routes[0].legs[0].end_location.lat,
+      this.bookmark.data.routes[0].legs[0].end_location.lng
     );
 
     const options = {
@@ -69,7 +70,7 @@ export class ViewBookmarkPage {
       label:"B"
     });
 
-    let polylineArray = polyline.decode(this.bookmark.routes[0].overview_polyline.points);
+    let polylineArray = polyline.decode(this.bookmark.data.routes[0].overview_polyline.points);
   
     for(let i = 0; i < polylineArray.length; i++){
       this.polylinePoints.push({lat: polylineArray[i][0], lng: polylineArray[i][1]});

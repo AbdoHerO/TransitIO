@@ -1,3 +1,4 @@
+import { Bookmark } from './../../models/bookmark.interface';
 import { ViewBookmarkPage } from './../view-bookmark/view-bookmark';
 import { TransitData } from './../../models/transitdata.interface';
 import { BookmarksProvider } from './../../providers/bookmarks/bookmarks';
@@ -18,7 +19,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BookmarksPage {
 
-  private bookmarks: TransitData[] = [];
+  private bookmarks: Bookmark[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private bookmarksProvier: BookmarksProvider) {
@@ -37,7 +38,7 @@ export class BookmarksPage {
     );
   }
 
-  private viewBookmark(bookmark: TransitData){
+  private viewBookmark(bookmark: Bookmark){
     this.navCtrl.push(ViewBookmarkPage, {
       bookmark: bookmark
     });
