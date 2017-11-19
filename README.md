@@ -1,9 +1,11 @@
-## Transport Io
-
+## TransitIO
 # About
+TransitIO is your real-time urban travel companion.
+Get all the information about public transport, such as: Bus line number, bus stops, travel duration, travel distance and more with accuracy.
 
 # Version
+Beta 1.5
 
-# Licence
-
-# Thanks to
+# Made with
+Ionic Framework.
+Google Maps API.
