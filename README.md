@@ -12,6 +12,9 @@ Get all the information about public transport, such as: Bus line number, bus st
 # Version
 Beta 1.5
 
+# Licence
+This project is licensed under the terms of the MIT license.
+
 # Made with
 Ionic Framework.
 Google Maps API.
